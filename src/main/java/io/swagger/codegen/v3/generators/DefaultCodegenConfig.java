@@ -2013,7 +2013,14 @@ public abstract class DefaultCodegenConfig implements CodegenConfig {
             codegenOperation.vendorExtensions.putAll(operation.getExtensions());
         }
 
+
         String operationId = getOrGenerateOperationId(operation, path, httpMethod);
+
+        String[] splits = operationId.split("_");
+
+        if(splits.length == 2)
+            operationId = splits[0];
+
         // remove prefix in operationId
         if (removeOperationIdPrefix) {
             int offset = operationId.indexOf('_');
@@ -3015,6 +3022,7 @@ public abstract class DefaultCodegenConfig implements CodegenConfig {
         // check for operationId uniqueness
 
         String uniqueName = co.operationId;
+        /*
         int counter = 0;
         for(CodegenOperation op : opList) {
             if(uniqueName.equals(op.operationId)) {
@@ -3024,7 +3032,9 @@ public abstract class DefaultCodegenConfig implements CodegenConfig {
         }
         if(!co.operationId.equals(uniqueName)) {
             LOGGER.warn("generated unique operationId `" + uniqueName + "`");
-        }
+        }*/
+
+        System.out.println("Writing method: " + uniqueName);
         co.operationId = uniqueName;
         co.operationIdLowerCase = uniqueName.toLowerCase();
         co.operationIdCamelCase = camelize(uniqueName);

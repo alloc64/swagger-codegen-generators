@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.swagger.codegen.v3</groupId>
-    <artifactId>swagger-codegen-generators</artifactId>
+    <artifactId>swagger-codegen-generators-custom</artifactId>
     <version>1.0.40-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -75,6 +75,28 @@
                     <testNGArtifactName>none:none</testNGArtifactName>
                     <argLine>-javaagent:${settings.localRepository}/org/jmockit/jmockit/${jmockit-version}/jmockit-${jmockit-version}.jar -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.util=ALL-UNNAMED</argLine>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>install-into-local-maven-repo</id>
+                        <phase>install</phase>
+                        <configuration>
+                            <repositoryLayout>default</repositoryLayout>
+                            <groupId>io.swagger.codegen.v3</groupId>
+                            <artifactId>swagger-codegen-generators-custom</artifactId>
+                            <version>1.0.40-SNAPSHOT</version>
+                            <file>${project.basedir}/target/swagger-codegen-generators-custom-1.0.40-SNAPSHOT.jar</file>
+                            <packaging>jar</packaging>
+                            <generatePom>true</generatePom>
+                        </configuration>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
